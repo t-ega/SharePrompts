@@ -13,7 +13,6 @@ const handler = NextAuth({
   ],
   callbacks: {
     async session({ session }) {
-      console.log(session, "Fetched session");
       await connectToDb();
       const sessionUser = await User.findOne({ email: session.user?.email });
 
