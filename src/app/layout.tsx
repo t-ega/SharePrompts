@@ -13,11 +13,15 @@ const RootLayout: React.FC<PropsWithChildren> = (props) => {
   return (
     <html lang="en">
       <body>
-        <Nav />
-        <div className="main">
-          <div className="gradient" />
-        </div>
-        <main className="app">{props.children}</main>
+        <Provider>
+          <div className="main">
+            <div className="gradient" />
+          </div>
+          <main className="app">
+            <Nav />
+            {props.children}
+          </main>
+        </Provider>
       </body>
     </html>
   );
