@@ -13,3 +13,9 @@ export interface GoogleProfileType {
   email: string;
   image: string;
 }
+
+export interface IPost {
+  post: string;
+  tag: string;
+  username: string;
+}
