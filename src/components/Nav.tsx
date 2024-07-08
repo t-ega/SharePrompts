@@ -94,7 +94,7 @@ const Nav = () => {
               width={37}
               height={37}
               className="rounded-full"
-              src={"/assests/images/logo.png"}
+              src={(session.user.image as string) || "/assests/images/user.png"}
               alt="profile"
               onClick={() => setToggleDropDown((prev) => !prev)}
             />
