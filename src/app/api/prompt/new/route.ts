@@ -24,6 +24,7 @@ export const POST = async (req: Request) => {
 
     const createdPrompt = await Post.create({
       ...value,
+      creator: value.userId,
     });
 
     return new Response(

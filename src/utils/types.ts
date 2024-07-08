@@ -11,11 +11,21 @@ declare module "next-auth" {
 export interface GoogleProfileType {
   name: string;
   email: string;
+  username: string;
+  picture: string;
+}
+
+export interface IUser {
+  id: string;
+  name: string;
+  email: string;
+  username: string;
   image: string;
 }
 
 export interface IPost {
-  post: string;
+  prompt: string;
   tag: string;
+  creator: IUser;
   username: string;
 }

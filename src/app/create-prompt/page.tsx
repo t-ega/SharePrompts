@@ -12,7 +12,7 @@ const CreatePrompt = () => {
   const router = useRouter();
 
   const [post, setPost] = useState({
-    post: "",
+    prompt: "",
     tag: "",
   });
 

@@ -1,10 +1,12 @@
 import Post from "@models/post";
 import { connectToDb } from "@utils/database";
 
-export const GET = async (req: Request) => {
+export const GET = async (req: Request, { params }: any) => {
+  const id = params.id;
+
   try {
     await connectToDb();
-    const prompts = await Post.find().populate("creator").exec();
+    const prompts = await Post.find({ creator: id }).populate("creator").exec();
     return new Response(JSON.stringify({ message: "Success", data: prompts }), {
       status: 200,
     });

@@ -20,9 +20,9 @@ const PromptCardList = (props: IPromptCardList) => {
         data.map((prompt, index) => (
           <PromptCard
             key={index}
-            prompt={prompt.post}
-            tag={prompt.tag}
-            username={prompt.username}
+            post={prompt}
+            handleDelete={() => {}}
+            handleEdit={() => {}}
             handleTagClick={handleTagClick}
           />
         ))}

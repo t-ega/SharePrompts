@@ -1,8 +1,8 @@
 import Link from "next/link";
 import React, { Dispatch, SetStateAction } from "react";
 
-interface Post {
-  post: string;
+export interface Post {
+  prompt: string;
   tag: string;
 }
 
@@ -40,8 +40,8 @@ const Form = (props: FormProps) => {
           </span>
           <textarea
             placeholder="Write your prompt here...."
-            onChange={(e) => setPost({ ...post, post: e.target.value })}
-            value={post.post}
+            onChange={(e) => setPost({ ...post, prompt: e.target.value })}
+            value={post.prompt}
             required
             className="form_textarea"
           />
