@@ -1,5 +1,7 @@
 import Post from "@models/post";
 import { connectToDb } from "@utils/database";
+import { getServerSession } from "next-auth";
+import { NextApiRequest, NextApiResponse } from "next";
 
 export const GET = async (req: Request, { params }: any) => {
   const id = params.id;

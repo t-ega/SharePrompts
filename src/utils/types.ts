@@ -25,6 +25,7 @@ export interface IUser {
 
 export interface IPost {
   prompt: string;
+  _id: string;
   tag: string;
   creator: IUser;
   username: string;

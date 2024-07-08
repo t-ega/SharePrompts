@@ -5,8 +5,8 @@ import { IPost } from "@utils/types";
 interface IProfile {
   name: string;
   data: IPost[] | undefined;
-  handleEdit: () => void;
-  handleDelete: () => void;
+  handleEdit: (id: string) => void;
+  handleDelete: (id: string) => void;
   desc: string;
 }
 
@@ -24,8 +24,8 @@ const Profile = (props: IProfile) => {
             <PromptCard
               key={index}
               post={prompt}
-              handleDelete={() => handleDelete && handleDelete()}
-              handleEdit={() => handleEdit && handleEdit()}
+              handleDelete={() => handleDelete && handleDelete(prompt._id)}
+              handleEdit={() => handleEdit && handleEdit(prompt._id)}
               handleTagClick={() => {}}
             />
           ))}

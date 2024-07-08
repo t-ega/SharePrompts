@@ -8,16 +8,20 @@ export const PUT = async (req: Request, { params }: any) => {
   const { error, value } = validatePost(body);
 
   if (error) {
-    return new Response(JSON.stringify({ message: error.message }), {
+    return new Response(JSON.stringify({ error: error.details[0].message }), {
       status: 400,
     });
   }
 
   try {
     await connectToDb();
-    const post = await Post.find({ id, creator: value.userId }, value, {
-      new: true,
-    })
+    const post = await Post.findOneAndUpdate(
+      { id, creator: value.userId },
+      value,
+      {
+        new: true,
+      }
+    )
       .populate("creator")
       .exec();
     return new Response(JSON.stringify({ message: "Success", data: post }), {
