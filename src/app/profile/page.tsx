@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 
 const MyProfile = () => {
   const { data: session } = useSession();
-  console.log(session, "Sessio");
   const [posts, setPosts] = useState([]);
   const handleEdit = () => {};
   const handleDelete = async () => {};
