@@ -16,7 +16,7 @@ export interface GoogleProfileType {
 }
 
 export interface IUser {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   username: string;

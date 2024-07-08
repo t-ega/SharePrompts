@@ -1,4 +1,5 @@
 import { IPost } from "@utils/types";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React, { useState } from "react";
 
@@ -10,8 +11,10 @@ interface IPromptCard {
 }
 
 const PromptCard = (props: IPromptCard) => {
-  const { post, handleTagClick } = props;
+  const { post, handleTagClick, handleDelete, handleEdit } = props;
   const [copied, setCopied] = useState("");
+  const { data: session } = useSession();
+
   const handleCopy = () => {
     navigator.clipboard.writeText(post.prompt);
 
@@ -62,6 +65,24 @@ const PromptCard = (props: IPromptCard) => {
       >
         #{post.tag}
       </p>
+
+      {session?.user?.id === post.creator._id &&
+        window.location.pathname === "/profile" && (
+          <div className="mt-5 flex-center gap-4 border-t border-gray-100 pt-3">
+            <p
+              className="font-inter text-sm green_gradient cursor-pointer"
+              onClick={() => handleEdit()}
+            >
+              Edit Post
+            </p>
+            <p
+              className="font-inter text-sm orange_gradient cursor-pointer"
+              onClick={() => handleDelete()}
+            >
+              Delete Post
+            </p>
+          </div>
+        )}
     </div>
   );
 };
