@@ -1,4 +1,5 @@
 import Post from "@models/post";
+import User from "@models/user";
 import { connectToDb } from "@utils/database";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
@@ -21,27 +22,25 @@ export const GET = async (req: Request, { params }: any) => {
   }
 };
 
-export const DELETE = async (
-  req: NextApiRequest,
-  res: NextApiResponse,
-  { params }: any
-) => {
+export const DELETE = async (req: NextApiRequest, { params }: any) => {
   const { id } = params;
-  console.log("kkkk");
 
   const session = await getServerSession();
 
   if (!session) {
-    res.status(401).json({ message: "You must be logged in." });
-    return;
+    return Response.json(
+      { message: "You must be logged in." },
+      { status: 401 }
+    );
   }
 
   try {
     await connectToDb();
 
+    const user = await User.findOne({ email: session?.user?.email }).exec();
     const post = await Post.findOneAndDelete({
       id,
-      creator: session?.user?.id,
+      creator: user?.id,
     }).exec();
 
     if (!post) {
@@ -50,8 +49,8 @@ export const DELETE = async (
       });
     }
 
-    return new Response(JSON.stringify({}), {
-      status: 204,
+    return new Response(JSON.stringify({ mesage: "Success" }), {
+      status: 200,
     });
   } catch (err) {
     console.error("An error occurred while fetching prompts", err);

@@ -17,10 +17,12 @@ const MyProfile = () => {
   };
 
   const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this prompt?")) return;
+
     setExecuting(true);
     if (executing) return;
 
-    const response = await fetch(`/api/users/prompt/${id}`, {
+    const response = await fetch(`/api/prompt/${id}`, {
       method: "DELETE",
     });
 
@@ -29,7 +31,8 @@ const MyProfile = () => {
       return;
     }
 
-    fetchPosts();
+    const posts = await fetchPosts();
+    setPosts(posts);
     toast.success("Prompt deleted successfully");
     setExecuting(false);
   };
@@ -44,14 +47,14 @@ const MyProfile = () => {
 
     const data = await response.json();
     setPosts(data.data);
+    return data.data;
   };
 
   useEffect(() => {
-    console.log("Execut");
     if (session?.user?.id) {
       fetchPosts();
     }
-  }, [session?.user, posts]);
+  }, [session?.user]);
 
   return (
     <div>
