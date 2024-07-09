@@ -1,7 +1,6 @@
 import Post from "@models/post";
 import User from "@models/user";
 import { connectToDb } from "@utils/database";
-import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 
 export const GET = async (req: Request, { params }: any) => {
@@ -22,7 +21,7 @@ export const GET = async (req: Request, { params }: any) => {
   }
 };
 
-export const DELETE = async (req: NextApiRequest, { params }: any) => {
+export const DELETE = async (req: Request, { params }: any) => {
   const { id } = params;
 
   const session = await getServerSession();
