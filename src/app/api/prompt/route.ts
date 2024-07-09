@@ -1,9 +1,30 @@
 import Post from "@models/post";
 import { connectToDb } from "@utils/database";
+import { NextApiRequest, NextApiResponse } from "next";
 
-export const GET = async (req: Request) => {
+export const GET = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     await connectToDb();
+
+    const url = new URL(req.url!);
+    const searchParams = new URLSearchParams(url.searchParams);
+    const query = searchParams.get("query");
+
+    if (query) {
+      const prompts = await Post.find({
+        $or: [
+          { prompt: { $regex: query, $options: "i" } },
+          { tag: { $regex: query, $options: "i" } },
+        ],
+      })
+        .populate("creator")
+        .exec();
+
+      return new Response(
+        JSON.stringify({ message: "Success", data: prompts })
+      );
+    }
+
     const prompts = await Post.find().populate("creator").exec();
     return new Response(JSON.stringify({ message: "Success", data: prompts }), {
       status: 200,

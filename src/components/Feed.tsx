@@ -6,10 +6,11 @@ import PromptCard from "./PromptCard";
 import { toast } from "react-toastify";
 import { IPost } from "@utils/types";
 import PromptCardSkeleton from "@app/prompt-skeleton";
+import { useRouter } from "next/navigation";
 
 interface IPromptCardList {
   data: IPost[] | undefined;
-  handleTagClick: () => void;
+  handleTagClick: (tag: string) => void;
 }
 
 const PromptCardList = (props: IPromptCardList) => {
@@ -22,8 +23,6 @@ const PromptCardList = (props: IPromptCardList) => {
           <PromptCard
             key={index}
             post={prompt}
-            handleDelete={() => {}}
-            handleEdit={() => {}}
             handleTagClick={handleTagClick}
           />
         ))}
@@ -35,7 +34,7 @@ const Feed = () => {
   const [searchText, setSearchText] = useState("");
   const [posts, setPosts] = useState<IPost[]>();
 
-  const handleSearchText = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchText = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
 
@@ -55,6 +54,24 @@ const Feed = () => {
     fetchPosts();
   }, []);
 
+  useEffect(() => {
+    const timeout = setTimeout(async () => {
+      const response = await fetch(`/api/prompt?query=${searchText}`);
+
+      if (!response.ok) {
+        toast.error("Failed to fetch prompts");
+        return;
+      }
+
+      const data = await response.json();
+      setPosts(data.data);
+    }, 300);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [searchText]);
+
   return (
     <section className="feed">
       <form action="" className="relative w-full flex-center">
@@ -68,7 +85,10 @@ const Feed = () => {
         />
       </form>
       {posts ? (
-        <PromptCardList data={posts} handleTagClick={() => {}} />
+        <PromptCardList
+          data={posts}
+          handleTagClick={(tag) => setSearchText(tag)}
+        />
       ) : (
         <PromptCardSkeleton />
       )}

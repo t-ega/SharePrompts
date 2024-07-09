@@ -1,8 +1,6 @@
 "use client";
 import Feed from "@components/Feed";
-import { Suspense } from "react";
 import { ToastContainer } from "react-toastify";
-import PromptCardSkeleton from "./prompt-skeleton";
 
 const Home = () => {
   return (

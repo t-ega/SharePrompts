@@ -1,18 +1,20 @@
 import { IPost } from "@utils/types";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 interface IPromptCard {
   post: IPost;
   handleTagClick: (tag: string) => void;
-  handleEdit: () => void;
-  handleDelete: () => void;
+  handleEdit?: () => void;
+  handleDelete?: () => void;
 }
 
 const PromptCard = (props: IPromptCard) => {
   const { post, handleTagClick, handleDelete, handleEdit } = props;
   const [copied, setCopied] = useState("");
+  const router = useRouter();
   const { data: session } = useSession();
 
   const handleCopy = () => {
@@ -27,7 +29,16 @@ const PromptCard = (props: IPromptCard) => {
   return (
     <div className="prompt_card">
       <div className="flex justify-between items-start gap-5">
-        <div className="flex-1 flex justify-start items-center gap-3 cursor-pointer">
+        <div
+          className="flex-1 flex justify-start items-center gap-3 cursor-pointer"
+          onClick={() => {
+            if (post.creator._id === session?.user?.id) {
+              router.push("/profile");
+              return;
+            }
+            router.push(`/u/${post.creator._id}`);
+          }}
+        >
           <Image
             src={post.creator?.image || "/assests/images/user.png"}
             alt="user_image"
@@ -77,7 +88,7 @@ const PromptCard = (props: IPromptCard) => {
             </p>
             <p
               className="font-inter text-sm orange_gradient cursor-pointer"
-              onClick={() => handleDelete()}
+              onClick={handleDelete}
             >
               Delete Post
             </p>
