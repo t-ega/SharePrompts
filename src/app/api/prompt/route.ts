@@ -1,8 +1,7 @@
 import Post from "@models/post";
 import { connectToDb } from "@utils/database";
-import { NextApiRequest, NextApiResponse } from "next";
 
-export const GET = async (req: NextApiRequest, res: NextApiResponse) => {
+export const GET = async (req: Request) => {
   try {
     await connectToDb();
 
