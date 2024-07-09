@@ -2,6 +2,7 @@ import "@styles/globals.css";
 import React, { PropsWithChildren } from "react";
 import Nav from "@components/Nav";
 import Provider from "@components/Provider";
+import "react-loading-skeleton/dist/skeleton.css";
 import "react-toastify/dist/ReactToastify.css";
 
 export const metadata = {

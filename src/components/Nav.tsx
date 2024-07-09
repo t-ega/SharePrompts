@@ -11,6 +11,7 @@ import {
   ClientSafeProvider,
 } from "next-auth/react";
 import { BuiltInProviderType } from "next-auth/providers/index";
+import Skeleton from "react-loading-skeleton";
 
 const Nav = () => {
   const { data: session } = useSession();
@@ -71,7 +72,7 @@ const Nav = () => {
           </div>
         ) : (
           <>
-            {providers &&
+            {providers ? (
               Object.values(providers).map((provider) => (
                 <button
                   type="button"
@@ -81,7 +82,10 @@ const Nav = () => {
                 >
                   Sign In
                 </button>
-              ))}
+              ))
+            ) : (
+              <Skeleton height={40} width={100} />
+            )}
           </>
         )}
       </div>

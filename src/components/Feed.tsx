@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import PromptCard from "./PromptCard";
 import { toast } from "react-toastify";
 import { IPost } from "@utils/types";
+import PromptCardSkeleton from "@app/prompt-skeleton";
 
 interface IPromptCardList {
   data: IPost[] | undefined;
@@ -66,8 +67,11 @@ const Feed = () => {
           onChange={handleSearchText}
         />
       </form>
-
-      <PromptCardList data={posts} handleTagClick={() => {}} />
+      {posts ? (
+        <PromptCardList data={posts} handleTagClick={() => {}} />
+      ) : (
+        <PromptCardSkeleton />
+      )}
     </section>
   );
 };
